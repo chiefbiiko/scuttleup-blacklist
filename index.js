@@ -182,6 +182,11 @@ Log.prototype.blacklist = function(peer, seq, cb) {
   this.del(peer, seq, cb)
 }
 
+Log.prototype.whitelist = function(peer, seq, cb) {
+  if (!this._blacklist[peer]) cb('nothing blacklisted for peer ' + peer, null)
+  cb(null, this._blacklist[peer].splice(this._blacklist[peer].indexOf(seq), 1))
+}
+
 Log.prototype.append = function(entry, cb) {
   if (this.corked) return this._wait(this.append, arguments, false)
   if (!cb) cb = noop

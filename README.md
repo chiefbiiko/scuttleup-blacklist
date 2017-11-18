@@ -38,6 +38,25 @@ var repl2 = log2.createReplicationStream()
 repl1.pipe(repl2).pipe(repl1)
 ```
 
+## Blacklisting
+
+``` js
+var fraudsta = scuttleupBlacklist(db)
+var alman = scuttleupBlacklist(db)
+
+var fraudr = fraudsta.createReplicationStream()
+var almar = alman.createReplicationStream()
+
+fraudsta.append('some juju', function(err, data) {
+  alman.blacklist(data.peer, data.seq, function(err) {
+    if (err) return console.error(err)
+    fraudr.pipe(almar).pipe(fraudr)
+    // fraudsta's juju will not be piped into alman's levelup
+  })
+})
+
+```
+
 ## API
 
 #### `var log = scuttleupBlacklist(db, [opts])`
@@ -95,6 +114,11 @@ Create a log write stream
 #### `log.blacklist(peer, seq[, callback])`
 
 Blacklist specific logs from being written into your levelup instance.
+
+#### `log.whitelist(peer, seq[, callback])`
+
+Remove a specific log from your blacklist.
+
 
 ## License
 

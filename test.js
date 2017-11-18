@@ -175,6 +175,7 @@ tape('blacklist', function(t) {
   var b = init()
   var ar = a.createReplicationStream()
   var br = b.createReplicationStream()
+
   a.append(new Buffer('some data'), function(err, data) {
     b.blacklist(data.peer, data.seq, function(err) {
       t.error(err, 'no err')
@@ -182,7 +183,27 @@ tape('blacklist', function(t) {
       setTimeout(function() {
         t.ok(b.head.length === 0, 'b log should be empty')
         t.end()
-      }, 500)
+      }, 100)
+    })
+  })
+})
+
+tape('whitelist', function(t) {
+  var a = init()
+  var b = init()
+  var ar = a.createReplicationStream()
+  var br = b.createReplicationStream()
+
+  a.append('some juju', function(err, data) {
+    b.blacklist(data.peer, data.seq, function(err) {
+      b.whitelist(data.peer, data.seq, function(err) {
+        t.error(err, 'no err')
+        ar.pipe(br).pipe(ar)
+        setTimeout(function() {
+          t.ok(b.head.length === 1, 'b log should have an entry')
+          t.end()
+        }, 500)
+      })
     })
   })
 })
