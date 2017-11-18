@@ -221,7 +221,7 @@ Log.prototype.createReplicationStream = function(opts) {
 
   var ondata = function(data, cb) {
     if (!self._blacklist[data.peer] ||
-        !self._blacklist[data.peer].indexOf(data.seq) !== -1) {
+        self._blacklist[data.peer].indexOf(data.seq) === -1) {
       seqs[data.peer] = data.seq
       self._write(data, 'binary', cb)
     }
