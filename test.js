@@ -176,7 +176,8 @@ tape('blacklist', t => {
   var ar = a.createReplicationStream()
   var br = b.createReplicationStream()
   a.append(Buffer.from('some data'), (err, data) => {
-    b.blacklist(data.peer, data.seq, () => {
+    b.blacklist(data.peer, data.seq, err => {
+      t.error(err, 'no err')
       ar.pipe(br).pipe(ar)
       setTimeout(() => {
         t.ok(b.head.length === 0, 'b log should be empty')
