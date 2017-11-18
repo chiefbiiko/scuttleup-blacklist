@@ -41,13 +41,14 @@ repl1.pipe(repl2).pipe(repl1)
 ## Blacklisting
 
 ``` js
-var fraudsta = scuttleupBlacklist(db)
-var alman = scuttleupBlacklist(db)
+var fraudsta = scuttleupBlacklist(db1)
+var alman = scuttleupBlacklist(db2)
 
 var fraudr = fraudsta.createReplicationStream()
 var almar = alman.createReplicationStream()
 
 fraudsta.append('some juju', function(err, data) {
+  if (err) return console.error(err)
   alman.blacklist(data.peer, data.seq, function(err) {
     if (err) return console.error(err)
     fraudr.pipe(almar).pipe(fraudr)
