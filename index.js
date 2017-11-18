@@ -96,8 +96,8 @@ var decodeKey = function(key) {
   var seq = lexi.unpack(key.slice(key.lastIndexOf(SEP)+1), 'hex')
 
   return {
-    peer: peer,
-    seq: seq
+    peer: peer.toString('hex'),
+    seq: seq || 0
   }
 }
 
@@ -133,6 +133,7 @@ var Log = function(db, opts) {
   this._waiting = []
   this._writing = null
   this._indices = {}
+  this._blacklist = {}
 
   var self = this
 
@@ -174,6 +175,13 @@ Log.prototype.del = function(peer, seq, cb) {
   this.db.del(encodeKey(peer, seq), cb)
 }
 
+Log.prototype.blacklist = function(peer, seq, cb) {
+  Array.isArray(this._blacklist[peer])
+    ? this._blacklist[peer].push(seq)
+    : this._blacklist[peer] = [ seq ]
+  this.del(peer, seq, cb)
+}
+
 Log.prototype.append = function(entry, cb) {
   if (this.corked) return this._wait(this.append, arguments, false)
   if (!cb) cb = noop
@@ -212,8 +220,11 @@ Log.prototype.createReplicationStream = function(opts) {
   var result = duplexify(unpack, pack)
 
   var ondata = function(data, cb) {
-    seqs[data.peer] = data.seq
-    self._write(data, 'binary', cb)
+    if (!self._blacklist[data.peer] ||
+        !self._blacklist[data.peer].includes(data.seq)) {
+      seqs[data.peer] = data.seq
+      self._write(data, 'binary', cb)
+    }
   }
 
   var onhandshake = function(data, cb) {

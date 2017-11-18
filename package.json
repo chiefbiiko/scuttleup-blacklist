@@ -1,6 +1,6 @@
 {
-  "name": "scuttleup",
-  "version": "3.3.0",
+  "name": "scuttleup-blacklist",
+  "version": "3.4.0",
   "description": "Scuttlebutt like eventual consistent log replication for levelup",
   "main": "index.js",
   "dependencies": {
@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mafintosh/scuttleup.git"
+    "url": "https://github.com/chiefbiiko/scuttleup-blacklist.git"
   },
   "browserify": {
     "transform": [
@@ -34,10 +34,10 @@
   "scripts": {
     "test": "tape test.js"
   },
-  "author": "Mathias Buus (@mafintosh)",
+  "author": "Noah Anabiik Schwarz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mafintosh/scuttleup/issues"
+    "url": "https://github.com/chiefbiiko/scuttleup-blacklist/issues"
   },
-  "homepage": "https://github.com/mafintosh/scuttleup"
+  "homepage": "https://github.com/chiefbiiko/scuttleup-blacklist"
 }

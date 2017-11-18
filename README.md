@@ -1,19 +1,19 @@
-# scuttleup
+# scuttleup-blacklist
 
-Scuttlebutt like eventual consistent log replication for levelup
+Scuttlebutt like eventual consistent log replication for levelup that allows blacklisting
 
 ```
-npm install scuttleup
+npm install --save scuttleup-blacklist
 ```
 
-[![build status](http://img.shields.io/travis/mafintosh/scuttleup.svg?style=flat)](http://travis-ci.org/mafintosh/scuttleup)
+[![build status](http://img.shields.io/travis/chiefbiiko/scuttleup-blacklist.svg?style=flat)](http://travis-ci.org/chiefbiiko/scuttleup-blacklist)
 
 ## Usage
 
 ``` js
-var scuttleup = require('scuttleup')
+var scuttleupBlack = require('scuttleup-blacklist')
 
-var log = scuttleup(db) // db is a levelup instance
+var log = scuttleupBlack(db) // db is a levelup instance
 
 var changes = log.createReadStream({
   live: true
@@ -40,7 +40,7 @@ repl1.pipe(repl2).pipe(repl1)
 
 ## API
 
-#### `var log = scuttleup(db, [opts])`
+#### `var log = scuttleupBlack(db, [opts])`
 
 Create a log new instance. Options can include
 
@@ -92,6 +92,10 @@ Create a log read stream. Options can include
 
 Create a log write stream
 
+#### `log.blacklist(peer, seq[, callback])`
+
+Blacklist specific logs from being written into your levelup insatnceup.
+
 ## License
 
-MIT
+[MIT](./license.md)

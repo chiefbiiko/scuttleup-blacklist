@@ -169,3 +169,19 @@ tape('del entry', function(t) {
 
   a.append(new Buffer('hello world'))
 })
+
+tape('blacklist', t => {
+  var a = init()
+  var b = init()
+  var ar = a.createReplicationStream()
+  var br = b.createReplicationStream()
+  a.append(Buffer.from('some data'), (err, data) => {
+    b.blacklist(data.peer, data.seq, () => {
+      ar.pipe(br).pipe(ar)
+      setTimeout(() => {
+        t.ok(b.head.length === 0, 'b log should be empty')
+        t.end()
+      }, 500)
+    })
+  })
+})
