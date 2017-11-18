@@ -6,7 +6,7 @@ Scuttlebutt like eventual consistent log replication for levelup that allows bla
 npm install --save scuttleup-blacklist
 ```
 
-[![build status](http://img.shields.io/travis/chiefbiiko/scuttleup-blacklist.svg?style=flat)](http://travis-ci.org/chiefbiiko/scuttleup-blacklist)
+[![build status](http://img.shields.io/travis/chiefbiiko/scuttleup-blacklist.svg?style=flat)](http://travis-ci.org/chiefbiiko/scuttleup-blacklist) [![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/chiefbiiko/scuttleup-blacklist?branch=master&svg=true)](https://ci.appveyor.com/project/chiefbiiko/scuttleup-blacklist)
 
 ## Usage
 

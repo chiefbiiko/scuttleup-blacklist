@@ -1,6 +1,6 @@
 {
   "name": "scuttleup-blacklist",
-  "version": "3.4.1",
+  "version": "3.4.2",
   "description": "Scuttlebutt like eventual consistent log replication for levelup",
   "main": "index.js",
   "dependencies": {

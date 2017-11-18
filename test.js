@@ -175,7 +175,7 @@ tape('blacklist', function(t) {
   var b = init()
   var ar = a.createReplicationStream()
   var br = b.createReplicationStream()
-  a.append(Buffer.from('some data'), function(err, data) {
+  a.append(new Buffer('some data'), function(err, data) {
     b.blacklist(data.peer, data.seq, function(err) {
       t.error(err, 'no err')
       ar.pipe(br).pipe(ar)

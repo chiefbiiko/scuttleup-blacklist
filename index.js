@@ -176,7 +176,7 @@ Log.prototype.del = function(peer, seq, cb) {
 }
 
 Log.prototype.blacklist = function(peer, seq, cb) {
-  Array.isArray(this._blacklist[peer])
+  this._blacklist[peer]
     ? this._blacklist[peer].push(seq)
     : this._blacklist[peer] = [ seq ]
   this.del(peer, seq, cb)
